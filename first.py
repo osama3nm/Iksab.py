@@ -125,4 +125,3 @@ print("Apples" in fruits_set )              # the output True or False
 # to delete set 
 del fruits_set 
 print(fruits_set)   # is not definedd
-
