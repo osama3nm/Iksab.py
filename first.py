@@ -55,13 +55,13 @@ print(message)
 #string method  (function)
 user_input = " Osama06@Gmail.Com  "
 print(user_input)
-clean_email = user_input.strip() 
-print(f"After remove the space : '{clean_email}'")
-final_email = clean_email.lower()
+clean_email = user_input.strip()                                      # بشيل الفراغات من النص 
+print(f"After remove the space : '{clean_email}'")      
+final_email = clean_email.lower()                                     # بخلي كل الاحرف small 
 print(f"The Email After Modification : '{final_email}' ")
-company_email = final_email.replace("gmail.com" , "company.com") 
+company_email = final_email.replace("gmail.com" , "company.com")      # ببدل النص بنص اخر 
 print(f"The Email After Replace : {company_email}")
-print(f"The Email After Modification first character :{company_email.capitalize()}")
+print(f"The Email After Modification first character :{company_email.capitalize()}")     # بخلي اول حرف  capital 
 
 # طريقه ثانيه في سطر واحد وطباعه وحده 
 row_input = "  Ahmad95@GMAIL.com  "
@@ -71,9 +71,9 @@ print(f"The Final Email For Database :{perfect_email}")
 
 word = "bananaa" 
 sub = 'a'
-print(f"number of character (a) is : {word.count(sub)}")
+print(f"number of character (a) is : {word.count(sub)}")       # عد مرات تكرار حرف معين في النص 
 
-print(f"find location is character (b) in the word (like is array) : {word.find('b')}")
+print(f"find location is character (b) in the word (like is array) : {word.find('b')}")  #يطلع موقع حرف معين في النص ولو مش موجود يطلع -1
 
 
 # creat list 
