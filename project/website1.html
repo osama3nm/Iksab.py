@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تطبيق بسيط</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+text-align: center;
+background-color: #f4f4f4;
+margin-top: 50px;
+}
+h1 {
+color: #333;
+}
+button {
+padding: 10px 20px;
+font-size: 16px;
+color: #fff;
+background-color: #007bff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+button:hover {
+background-color: #0056b3;
+}
+</style>
+</head>
+<body>
+<h1>مرحبًا بك في موقعك الأول!</h1>
+<p id="par">اضغط على الزر لتغيير هذه الرسالة.</p>
+<button onclick="changeText()">اضغط هنا</button>
+<script>
+function changeText() {
+document.getElementById("par").innerHTML = "تم تغيير النص بنجاح باستخدام JavaScript!";
+}
+</script>
+</body>
+</html>
