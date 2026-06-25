@@ -8,4 +8,14 @@ elif x < 0 :
 else :
     print("x is zero")
 
+for i in range(1,11) :
+   print(i)
+   if i == 5 :
+      break
+   elif i == 3 :
+      continue
+   else :
+      print("i is not 3 or 5")
+
+
 
