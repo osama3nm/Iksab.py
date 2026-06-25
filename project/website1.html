@@ -1,41 +1,410 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تطبيق بسيط</title>
-<style>
-body {
-font-family: Arial, sans-serif;
-text-align: center;
-background-color: #f4f4f4;
-margin-top: 50px;
-}
-h1 {
-color: #333;
-}
-button {
-padding: 10px 20px;
-font-size: 16px;
-color: #fff;
-background-color: #007bff;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-}
-button:hover {
-background-color: #0056b3;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>آلة حاسبة</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0f0f13;
+      --surface: #1a1a24;
+      --surface-2: #22222f;
+      --accent: #7c5cfc;
+      --accent-light: #9d82fd;
+      --accent-glow: rgba(124, 92, 252, 0.35);
+      --text-primary: #f0eeff;
+      --text-secondary: #8e8aaa;
+      --btn-num: #1e1e2e;
+      --btn-num-hover: #2a2a40;
+      --btn-op: #2a1f5a;
+      --btn-op-hover: #3a2b7a;
+      --btn-eq: #7c5cfc;
+      --btn-eq-hover: #9d82fd;
+      --btn-clear: #2d1f3a;
+      --btn-clear-hover: #3d2a50;
+      --radius: 20px;
+      --btn-radius: 14px;
+    }
+
+    body {
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Space Grotesk', sans-serif;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(124, 92, 252, 0.08) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(92, 124, 252, 0.06) 0%, transparent 50%);
+    }
+
+    .calculator {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 28px 24px 24px;
+      width: 340px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5),
+                  0 0 0 1px rgba(124, 92, 252, 0.15),
+                  inset 0 1px 0 rgba(255,255,255,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .calculator::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 120px;
+      background: var(--accent-glow);
+      filter: blur(50px);
+      pointer-events: none;
+      border-radius: 50%;
+    }
+
+    /* Display */
+    .display {
+      background: var(--surface-2);
+      border-radius: 14px;
+      padding: 20px 22px 16px;
+      margin-bottom: 22px;
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(124, 92, 252, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .display::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.4;
+    }
+
+    .expression {
+      font-size: 13px;
+      color: var(--text-secondary);
+      min-height: 20px;
+      text-align: right;
+      letter-spacing: 0.3px;
+      word-break: break-all;
+      line-height: 1.4;
+    }
+
+    .result {
+      font-size: 44px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-align: right;
+      letter-spacing: -1px;
+      line-height: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: color 0.15s;
+    }
+
+    .result.error {
+      font-size: 22px;
+      color: #fc5c7c;
+    }
+
+    /* Buttons grid */
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .btn {
+      height: 68px;
+      border: none;
+      border-radius: var(--btn-radius);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.08s ease, background 0.12s ease, box-shadow 0.12s ease;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      background: rgba(255,255,255,0.08);
+      transition: opacity 0.1s;
+    }
+
+    .btn:hover::after { opacity: 1; }
+
+    .btn:active {
+      transform: scale(0.93);
+    }
+
+    /* Number buttons */
+    .btn-num {
+      background: var(--btn-num);
+      color: var(--text-primary);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .btn-num:hover { background: var(--btn-num-hover); }
+
+    /* Operator buttons */
+    .btn-op {
+      background: var(--btn-op);
+      color: var(--accent-light);
+      font-size: 20px;
+      font-weight: 600;
+      border: 1px solid rgba(124, 92, 252, 0.2);
+    }
+    .btn-op:hover { background: var(--btn-op-hover); }
+
+    /* Clear / Util buttons */
+    .btn-clear {
+      background: var(--btn-clear);
+      color: #fc82a0;
+      border: 1px solid rgba(252, 92, 124, 0.15);
+      font-size: 15px;
+    }
+    .btn-clear:hover { background: var(--btn-clear-hover); }
+
+    /* Equals button */
+    .btn-eq {
+      background: var(--btn-eq);
+      color: #fff;
+      font-size: 22px;
+      grid-column: span 1;
+      box-shadow: 0 6px 24px rgba(124, 92, 252, 0.4);
+      border: none;
+    }
+    .btn-eq:hover {
+      background: var(--btn-eq-hover);
+      box-shadow: 0 8px 30px rgba(124, 92, 252, 0.55);
+    }
+
+    /* Zero button spans 2 cols */
+    .btn-zero {
+      grid-column: span 2;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Percent / backspace */
+    .btn-util {
+      background: var(--btn-clear);
+      color: var(--text-secondary);
+      font-size: 16px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .btn-util:hover { background: var(--btn-clear-hover); color: var(--text-primary); }
+
+    /* Dot button */
+    .btn-dot {
+      background: var(--btn-num);
+      color: var(--accent-light);
+      font-size: 22px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* Keyboard hint */
+    .hint {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 11px;
+      margin-top: 18px;
+      opacity: 0.5;
+      letter-spacing: 0.4px;
+    }
+  </style>
 </head>
 <body>
-<h1>مرحبًا بك في موقعك الأول!</h1>
-<p id="par">اضغط على الزر لتغيير هذه الرسالة.</p>
-<button onclick="changeText()">اضغط هنا</button>
+
+<div class="calculator" id="calc">
+  <div class="display">
+    <div class="expression" id="expression"></div>
+    <div class="result" id="result">0</div>
+  </div>
+
+  <div class="buttons">
+    <!-- Row 1 -->
+    <button class="btn btn-clear"   onclick="clearAll()">AC</button>
+    <button class="btn btn-util"    onclick="toggleSign()">+/-</button>
+    <button class="btn btn-util"    onclick="percent()">%</button>
+    <button class="btn btn-op"      onclick="inputOp('÷')">÷</button>
+
+    <!-- Row 2 -->
+    <button class="btn btn-num"     onclick="inputNum('7')">7</button>
+    <button class="btn btn-num"     onclick="inputNum('8')">8</button>
+    <button class="btn btn-num"     onclick="inputNum('9')">9</button>
+    <button class="btn btn-op"      onclick="inputOp('×')">×</button>
+
+    <!-- Row 3 -->
+    <button class="btn btn-num"     onclick="inputNum('4')">4</button>
+    <button class="btn btn-num"     onclick="inputNum('5')">5</button>
+    <button class="btn btn-num"     onclick="inputNum('6')">6</button>
+    <button class="btn btn-op"      onclick="inputOp('−')">−</button>
+
+    <!-- Row 4 -->
+    <button class="btn btn-num"     onclick="inputNum('1')">1</button>
+    <button class="btn btn-num"     onclick="inputNum('2')">2</button>
+    <button class="btn btn-num"     onclick="inputNum('3')">3</button>
+    <button class="btn btn-op"      onclick="inputOp('+')">+</button>
+
+    <!-- Row 5 -->
+    <button class="btn btn-num btn-zero" onclick="inputNum('0')">0</button>
+    <button class="btn btn-dot"     onclick="inputDot()">.</button>
+    <button class="btn btn-eq"      onclick="calculate()">=</button>
+  </div>
+
+  <p class="hint">يمكنك استخدام لوحة المفاتيح أيضاً</p>
+</div>
+
 <script>
-function changeText() {
-document.getElementById("par").innerHTML = "تم تغيير النص بنجاح باستخدام JavaScript!";
-}
+  let current   = '0';
+  let expression = '';
+  let operator   = null;
+  let operand1   = null;
+  let justCalc   = false;
+  let newNum     = false;
+
+  const resEl  = document.getElementById('result');
+  const expEl  = document.getElementById('expression');
+
+  function updateDisplay(val, exp = '') {
+    // Shrink font for long numbers
+    const len = String(val).length;
+    resEl.style.fontSize = len > 12 ? '24px' : len > 9 ? '32px' : len > 7 ? '38px' : '44px';
+    resEl.classList.remove('error');
+    resEl.textContent = val;
+    expEl.textContent = exp;
+  }
+
+  function showError(msg) {
+    resEl.classList.add('error');
+    resEl.textContent = msg;
+    expEl.textContent = '';
+    current = '0'; operator = null; operand1 = null; newNum = false; justCalc = false;
+  }
+
+  function inputNum(n) {
+    if (justCalc) { current = n; justCalc = false; newNum = false; }
+    else if (newNum || current === '0') { current = n; newNum = false; }
+    else { if (current.length < 15) current += n; }
+    updateDisplay(current, expEl.textContent);
+  }
+
+  function inputDot() {
+    if (justCalc) { current = '0.'; justCalc = false; }
+    else if (newNum) { current = '0.'; newNum = false; }
+    else if (!current.includes('.')) current += '.';
+    updateDisplay(current, expEl.textContent);
+  }
+
+  function inputOp(op) {
+    justCalc = false;
+    const val = parseFloat(current);
+    if (operand1 !== null && !newNum) {
+      const res = compute(operand1, val, operator);
+      if (res === null) return;
+      current = format(res);
+      operand1 = res;
+    } else {
+      operand1 = val;
+    }
+    operator = op;
+    newNum = true;
+    updateDisplay(current, `${format(operand1)} ${op}`);
+  }
+
+  function calculate() {
+    if (operator === null || operand1 === null) return;
+    const val = parseFloat(current);
+    const exp = `${format(operand1)} ${operator} ${format(val)} =`;
+    const res = compute(operand1, val, operator);
+    if (res === null) return;
+    current = format(res);
+    operand1 = null; operator = null;
+    newNum = false; justCalc = true;
+    updateDisplay(current, exp);
+  }
+
+  function compute(a, b, op) {
+    switch(op) {
+      case '+': return a + b;
+      case '−': return a - b;
+      case '×': return a * b;
+      case '÷':
+        if (b === 0) { showError('لا يمكن القسمة على صفر'); return null; }
+        return a / b;
+    }
+    return b;
+  }
+
+  function format(n) {
+    if (!isFinite(n)) return 'خطأ';
+    // Avoid floating point mess
+    const s = parseFloat(n.toPrecision(12)).toString();
+    return s;
+  }
+
+  function clearAll() {
+    current = '0'; expression = ''; operator = null;
+    operand1 = null; newNum = false; justCalc = false;
+    updateDisplay('0', '');
+  }
+
+  function toggleSign() {
+    if (current === '0') return;
+    current = current.startsWith('-') ? current.slice(1) : '-' + current;
+    updateDisplay(current, expEl.textContent);
+  }
+
+  function percent() {
+    const val = parseFloat(current);
+    if (operand1 !== null) {
+      current = format(operand1 * val / 100);
+    } else {
+      current = format(val / 100);
+    }
+    updateDisplay(current, expEl.textContent);
+  }
+
+  // Keyboard support
+  document.addEventListener('keydown', e => {
+    if (e.key >= '0' && e.key <= '9') inputNum(e.key);
+    else if (e.key === '.') inputDot();
+    else if (e.key === '+') inputOp('+');
+    else if (e.key === '-') inputOp('−');
+    else if (e.key === '*') inputOp('×');
+    else if (e.key === '/') { e.preventDefault(); inputOp('÷'); }
+    else if (e.key === 'Enter' || e.key === '=') calculate();
+    else if (e.key === 'Backspace') {
+      if (current.length > 1) current = current.slice(0, -1);
+      else current = '0';
+      updateDisplay(current, expEl.textContent);
+    }
+    else if (e.key === 'Escape') clearAll();
+    else if (e.key === '%') percent();
+  });
 </script>
 </body>
 </html>
