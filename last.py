@@ -25,6 +25,9 @@ print(person['phone'])
 # Get dict keys 
 print(person.keys())       # components of array
 
+# Get dict values
+print(person.values())     # data of array
+
 # Get dict items 
 print(person.items())      # details of array (components & data) 
 
