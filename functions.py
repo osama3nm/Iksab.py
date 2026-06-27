@@ -16,3 +16,11 @@ print(getsum(10 ,20 ))
 sum = getsum(10 , 20)
 print(sum)
 
+# Lambda function (anonymous function)
+x = lambda num1 , num2 : num1 + num2 # use lambda to create a simple function
+print(x(-5 , 4))
+
+
+
+
+
