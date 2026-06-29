@@ -32,3 +32,6 @@ print(firststudent.get_name()) # call getter
 
 # part 2 
 
+
+# دراسه  majec methods & pole morfazem & static & class methods 
+
