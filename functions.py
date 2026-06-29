@@ -20,7 +20,9 @@ print(sum)
 x = lambda num1 , num2 : num1 + num2 # use lambda to create a simple function
 print(x(-5 , 4))
 
+a = float(input("Enter the first sum:"))
+b = float(input("Enter the scond sum:"))
+c = float(input("Enter the third sum:"))
 
-
-
+def average(a,b,c):
 
