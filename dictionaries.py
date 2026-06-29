@@ -55,3 +55,26 @@ people = [
     ]
 print(people)
 print(people[1]['name'])
+
+print(dir(family))               # all items of dict 
+
+# nested dict 
+family1 = {"father" : 'ali' ,
+ "son" : "osama",
+ "phone" : "0796540024"
+}
+family2 ={"father" : 'mohammed',
+ "son" : 'saaed',
+ "phone":"078854201"
+}
+allfamily = {
+"family1":{"father" : 'mohammed',
+"son" : 'saaed',
+"phone":"078854201"} ,
+"family2":{"father" : 'mohammed',
+"son" : "saaed",
+"phone":"078854201"}
+}
+
+print(allfamily["family2"]["son"])
+
