@@ -56,8 +56,6 @@ people = [
 print(people)
 print(people[1]['name'])
 
-print(dir(family))               # all items of dict 
-
 # nested dict 
 family1 = {"father" : 'ali' ,
  "son" : "osama",
@@ -76,5 +74,6 @@ allfamily = {
 "phone":"078854201"}
 }
 
+#print(dir(allfamily))                all items of dict 
 print(allfamily["family2"]["son"])
 
