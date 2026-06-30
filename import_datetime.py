@@ -4,7 +4,7 @@ print(now)
 print(now.day)
 print(now.month)
 print(now.date())
-bdate = datetime.date(1990, 1, 1)
+bdate = datetime.date(2006, 7, 27)
 print((now.date() - bdate).days)
 
 
@@ -14,9 +14,9 @@ list1= [1,5,4,10,8,9]
 list2 = [10,1,5,9,8,10]
 s1 = set(list1)
 s2 = set(list2)
-print(s1|s2)  # union
-print(s1&s2)  # intersection
-print(s1-s2)  # difference
+print(s1|s2)  # union                  دمج العناصر الموجوده بالمجموعتين بدون تكرار
+print(s1&s2)  # intersection           دمج العناصر المشتركه فقط بالمجموعتين 
+print(s1-s2)  # difference             شو العناصر اللي بال s1 مش موجوده ب s2 
 print(s2-s1)  # difference
 
 
