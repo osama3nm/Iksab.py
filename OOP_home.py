@@ -60,4 +60,4 @@ print(osama.get_gender())        # اذا حطيت كلمه @property فوق ا�
 print(osama._User__gender)   # HAHAAHAHAHAH
 
 
-# polymorphic function ضل         
+# polymorphic function & class methods & majic methods        
