@@ -26,7 +26,7 @@ print(inhertance.sum(9,9))
 
 
 
-# try ecsipt 
+# try except function (key error & value error & syntax error & runtime error/index error & type error &)
 
 
 
