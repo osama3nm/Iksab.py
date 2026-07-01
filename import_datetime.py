@@ -19,5 +19,16 @@ print(s1&s2)  # intersection           دمج العناصر المشتركه ف
 print(s1-s2)  # difference             شو العناصر اللي بال s1 مش موجوده ب s2 
 print(s2-s1)  # difference
 
+# لطباعه التاريخ مع الاسماء مثلا الخميس 30 يونيو بستخدم method (strftime)
+now = datetime.datetime.now()
+format2 = now.strftime("%A, %B %d, %Y")
+print("Time : ", format2)
 
 
+# شو التاريخ بعد عدد ايام معين 
+today = datetime.date.today()
+ten_days = datetime.timedelta(days=10)
+
+# جمع المدة مع تاريخ اليوم
+future_date = today + ten_days
+print(future_date) # سيطبع التاريخ بعد 10 أيام
