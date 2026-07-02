@@ -6,6 +6,7 @@ class BankAccount :
         self.__balance = balance         
         self.__iban = iban
         BankAccount.customers += 1
+        BankAccount.total_savings +=balance
 
     def set_id(self,id):
         self.__id = id 
