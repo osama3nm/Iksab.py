@@ -2,10 +2,12 @@
 # Creat class 
 
 class User :
+    user_num = 0
     def __init__(self,name,email,age,gender = "male"):      # constructor 
         self.name = name 
         self.email = email
         self.age = age 
+        User.user_num +=1         # عدد كم object عملت
         self.__gender = gender    # private (Encapsulation)
     def getting(self):     # بزبط اضيف متغير جوا هاي ال method  وابعثو من خلال الاستدعاء بس راح تكون القيمه محليه وما بقدر اوصللها من خارج هاي ال method 
         return f"My name is {self.name} and I am {self.age} years old ."       
@@ -58,6 +60,7 @@ print(osama.get_gender())        # اذا حطيت كلمه @property فوق ا�
 
 # trick to acces to the private variable direct without methods inside class 
 print(osama._User__gender)   # HAHAAHAHAHAH
+print(User.user_num)      # number of object 
 
 
 # polymorphic function & class methods & majic methods        
